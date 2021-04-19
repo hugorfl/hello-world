@@ -1,0 +1,6 @@
+# code coverage
+.coverage
+htmlcov/
+
+# generated
+GuessingSteps.txt
