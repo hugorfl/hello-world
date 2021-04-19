@@ -1,9 +1,10 @@
 """ Development Exercises – L1
-Create a program invoked in the command line. It generatesa random number between 1 and 30
-(including 1 and 30). Ask the user to guess the number, then tell them whether they guessed
-too low, too high, or exactly right. Keep the game going until the user types “exit” or
-find the numberKeep track of how many guesses the user has taken, and when the game ends,
-print themouton console and in a file named GuessingSteps.txt
+Create a program invoked in the command line. It generates a random number
+between 1 and 30(including 1 and 30). Ask the user to guess the number,
+then tell them whether they guessed too low, too high, or exactly right.
+Keep the game going until the user types “exit” or find the numberKeep
+track of how many guesses the user has taken, and when the game ends, print
+themouton console and in a file named GuessingSteps.txt
 
 :authors: - Hugo Rodríguez
 """

@@ -1,12 +1,14 @@
 """ Development Exercises – L1
 
-Create a command line program that take as input parameter a number and then it displays in the
-console the corresponding number (positive integers Plus Zero) in Binary and Hexadecimal. It also
-manages errors using exceptions for not using numbers. Convert the number using the algorithm
-and not a function.
+Create a command line program that take as input parameter a number and then
+it displays in the console the corresponding number (positive integers Plus
+Zero) in Binary and Hexadecimal. It also manages errors using exceptions for
+not using numbers. Convert the number using the algorithm and not a function.
 
 :authors: - Hugo Rodríguez
 """
+
+import sys
 
 """
 Test Cases:
@@ -26,13 +28,14 @@ TTP: Test to pass
 TTF: Test to fail
 """
 
-import sys
 
 def tupleToString(binaryTuple):
     return ''.join(map(str, binaryTuple))
 
+
 def mapNumberToLetter(digit):
     return digit if digit < 10 else chr(ord('A') + digit - 10)
+
 
 def convertIntToBase(number, base):
     if number <= 0:
@@ -48,16 +51,20 @@ def convertIntToBase(number, base):
     digits.reverse()
     return tuple(digits)
 
+
 def convertToBin(number):
     return convertIntToBase(number, 2)
 
+
 def convertToHex(number):
     return convertIntToBase(number, 16)
+
 
 def checkArgument(expression, errorMsg):
     if not expression:
         raise ValueError(errorMsg)
     return
+
 
 def parseInput(strNumbersList, index):
     checkArgument(len(strNumbersList) > 1, "No arguments provided")
@@ -67,8 +74,12 @@ def parseInput(strNumbersList, index):
 
     number = int(strNumbersList[index])
     checkArgument(
-        number >= 0,f"Only positive integers and zero are allowed, \"{strNumbersList[index]}\" given ")
+        number >= 0,
+        'Only positive integers and zero are allowed, "'
+        + strNumbersList[index] + '" given'
+    )
     return number
+
 
 try:
     number = parseInput(sys.argv, 1)
