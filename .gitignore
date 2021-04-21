@@ -4,3 +4,4 @@ htmlcov/
 
 # generated
 GuessingSteps.txt
+__pycache__
