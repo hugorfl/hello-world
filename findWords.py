@@ -6,89 +6,90 @@ English or Spanish.
 """
 
 from itertools import islice
-import sys
+from os import WNOHANG
+from typing import Match, Optional
 import re
-
-"""
-Test cases:
-
-1 - [TTP] Insert existing filename and one or more keywords
-2 - [TTF] Insert non-existing filename and one or more keywords
-3 - [TTF] No keywords provided
-"""
+from utils import require
+import sys
 
 
-def checkArgument(expression: bool, errorMsg: str):
-    if not expression:
-        raise ValueError(errorMsg)
-
-
-def isArgumentFilename(filename: str) -> bool:
-    return re.match(r'^[\w-]+(.[a-zA-Z0-9]+)*$', filename)
-
-
-def isKeywordValid(keyword: str) -> bool:
-    return keyword.isascii()
-
-
-def checkInput(argsList: list[str]):
-    checkArgument(len(argsList) >= 1, 'No filename was given')
-    checkArgument(len(argsList) >= 2, 'No keywords were given')
-    checkArgument(
-        isArgumentFilename(argsList[0]),
+def __is_argument_a_filename(filename: str):
+    require(filename.strip(), "Filename cannot be empty")
+    require(
+        re.match(r'^[\w-]+(\.[a-zA-Z0-9]+)*$', filename) is not None,
         'Filename has invalid characters'
     )
 
-    for keyword in islice(argsList, 1, None):
-        checkArgument(
-            isKeywordValid(keyword),
+
+def __is_keyword_valid(keyword: str) -> bool:
+    return keyword.isascii()
+
+
+def __require_valid_keywords(key_args: tuple[str]):
+    require(len(key_args), 'No keywords were given')
+
+    for keyword in key_args:
+        require(
+            __is_keyword_valid(keyword) is not None,
             f'Keyword "{keyword}" has wrong format'
         )
 
 
-def extractKeywords(argsList: list[str]) -> dict[str, int]:
-    keywordDict = {}
+def __map_keywords(key_args: tuple[str]) -> dict[str, int]:
+    keywords = {}
 
-    for keyword in argsList:
-        keywordDict[keyword] = 0
+    for keyword in key_args:
+        keywords[keyword] = 0
 
-    return keywordDict
+    return keywords
 
 
-def readFileContents(filename: str) -> list:
+def __f_read_contents(filename: str) -> list[str]:
+    contents = []
+
     try:
-        file = open(filename, 'r')
+        with open(filename, 'r') as f:
+            contents = f.read()\
+                .replace('\n', ' ')\
+                .replace('\t', ' ')\
+                .split(' ')
     except FileNotFoundError:
         raise ValueError(f'File "{filename}" does not exist')
 
-    contents = file.read()\
-        .replace('\n', ' ')\
-        .replace('\t', ' ')
-    file.close()
-
-    return contents.split(' ')
+    return contents
 
 
-def parseFile(filename: str, keywords: dict[str, int]):
-    contents = readFileContents(filename)
+def f_find_words(filename: str, *key_args: str) -> dict[str, int]:
+    __is_argument_a_filename(filename)
+    __require_valid_keywords(key_args)
+
+    contents = __f_read_contents(filename)
+    keywords = __map_keywords(key_args)
     kwords = keywords.keys()
 
     for word in contents:
         if word in kwords:
             keywords[word] += 1
 
+    return keywords
 
-def printKeywordOcurrences(keywords: dict[str, int]):
+
+def __check_console_input(args: list[str]):
+    require(len(args) >= 1, 'No filename was given')
+    require(len(args) >= 2, 'No keywords were given')
+
+
+def print_keyword_ocurrences(keywords: dict[str, int]):
     kwords = keywords.keys()
 
     for kword in kwords:
         print(kword + ': ' + str(keywords[kword]) + ' ocurrences')
 
 
-try:
-    checkInput(sys.argv[1:])
-    keywordsDict = extractKeywords(sys.argv[2:])
-    parseFile(sys.argv[1], keywordsDict)
-    printKeywordOcurrences(keywordsDict)
-except ValueError as e:
-    print(e)
+if __name__ == "__main__":
+    try:
+        __check_console_input(sys.argv[1:])
+        keywords = f_find_words(sys.argv[1], *sys.argv[2:])
+        print_keyword_ocurrences(keywords)
+    except ValueError as e:
+        print(e)
