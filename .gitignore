@@ -1,0 +1,7 @@
+# code coverage
+.coverage
+htmlcov/
+
+# generated
+GuessingSteps.txt
+__pycache__
