@@ -14,33 +14,33 @@ from datetime import datetime
 
 numberToGuess = int(random.random() * 100) % 30 + 1
 
-logFile = open('GuessingSteps.txt', 'a+')
-logFile.write(f"\n{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} Run\n")
+log_file = open('GuessingSteps.txt', 'a+')
+log_file.write(f"\n{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} Run\n")
 
-keepGuessing = True
-while keepGuessing:
-    guessInput = input("Guess number: ")
+keep_guessing = True
+while keep_guessing:
+    guess_input = input("Guess number: ")
 
-    if not guessInput.isdigit():
-        if 'exit' == guessInput:
-            keepGuessing = False
-            logFile.write("exit\n")
+    if not guess_input.isdigit():
+        if guess_input == 'exit':
+            keep_guessing = False
+            log_file.write("exit\n")
         else:
-            print(f"Invalid number or option given: {guessInput}")
+            print(f"Invalid number or option given: {guess_input}")
         continue
 
-    guess = int(guessInput)
-    logFile.write(guessInput + ': ')
+    guess = int(guess_input)
+    log_file.write(guess_input + ': ')
 
     if guess < numberToGuess:
         print('Too low')
-        logFile.write('too low\n')
+        log_file.write('too low\n')
     elif guess > numberToGuess:
         print('Too high')
-        logFile.write('too high\n')
+        log_file.write('too high\n')
     elif guess == numberToGuess:
         print('Exactly right')
-        logFile.write('exactly right\n')
-        keepGuessing = False
+        log_file.write('exactly right\n')
+        keep_guessing = False
 
-logFile.close()
+log_file.close()
