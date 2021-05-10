@@ -8,9 +8,9 @@ not using numbers. Convert the number using the algorithm and not a function.
 :authors: - Hugo Rodríguez
 """
 
+import sys
 from typing import Any
 from utils import require
-import sys
 
 
 def __tuple_to_string(binary_tuple: tuple) -> str:
@@ -70,5 +70,5 @@ if __name__ == "__main__":
         print(f"Number to convert: {number}")
         print("Binary: " + convert_to_bin(number))
         print("Hexadecimal: " + convert_to_hex(number))
-    except ValueError as e:
-        print(e)
+    except ValueError as error:
+        print(error)

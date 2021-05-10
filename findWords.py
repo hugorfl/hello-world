@@ -5,12 +5,9 @@ is sensitive case. The program will accept the words to test as arguments.
 English or Spanish.
 """
 
-from itertools import islice
-from os import WNOHANG
-from typing import Match, Optional
 import re
-from utils import require
 import sys
+from utils import require
 
 
 def __is_argument_a_filename(filename: str):
@@ -48,8 +45,8 @@ def __f_read_contents(filename: str) -> list[str]:
     contents = []
 
     try:
-        with open(filename, 'r') as f:
-            contents = f.read()\
+        with open(filename, 'r') as file:
+            contents = file.read()\
                 .replace('\n', ' ')\
                 .replace('\t', ' ')\
                 .split(' ')
@@ -91,5 +88,5 @@ if __name__ == "__main__":
         __check_console_input(sys.argv[1:])
         keywords = f_find_words(sys.argv[1], *sys.argv[2:])
         print_keyword_ocurrences(keywords)
-    except ValueError as e:
-        print(e)
+    except ValueError as error:
+        print(error)

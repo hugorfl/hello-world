@@ -1,6 +1,7 @@
 # code coverage
 .coverage
 htmlcov/
+sca_res.txt
 
 # generated
 GuessingSteps.txt
