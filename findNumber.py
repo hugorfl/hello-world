@@ -12,7 +12,7 @@ themouton console and in a file named GuessingSteps.txt
 import random
 from datetime import datetime
 
-numberToGuess = int(random.random() * 100) % 30 + 1
+number_to_guess = int(random.random() * 100) % 30 + 1
 
 log_file = open('GuessingSteps.txt', 'a+')
 log_file.write(f"\n{datetime.today().strftime('%Y-%m-%d-%H:%M:%S')} Run\n")
@@ -32,13 +32,13 @@ while keep_guessing:
     guess = int(guess_input)
     log_file.write(guess_input + ': ')
 
-    if guess < numberToGuess:
+    if guess < number_to_guess:
         print('Too low')
         log_file.write('too low\n')
-    elif guess > numberToGuess:
+    elif guess > number_to_guess:
         print('Too high')
         log_file.write('too high\n')
-    elif guess == numberToGuess:
+    elif guess == number_to_guess:
         print('Exactly right')
         log_file.write('exactly right\n')
         keep_guessing = False
