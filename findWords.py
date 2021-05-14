@@ -7,6 +7,7 @@ English or Spanish.
 
 import re
 import sys
+from typing import List, Tuple, Dict
 from utils import require
 
 
@@ -22,7 +23,7 @@ def __is_keyword_valid(keyword: str) -> bool:
     return keyword.isascii()
 
 
-def __require_valid_keywords(key_args: tuple[str]):
+def __require_valid_keywords(key_args: Tuple[str]):
     require(len(key_args), 'No keywords were given')
 
     for keyword in key_args:
@@ -32,7 +33,7 @@ def __require_valid_keywords(key_args: tuple[str]):
         )
 
 
-def __map_keywords(key_args: tuple[str]) -> dict[str, int]:
+def __map_keywords(key_args: Tuple[str]) -> Dict[str, int]:
     keywords = {}
 
     for keyword in key_args:
@@ -41,7 +42,7 @@ def __map_keywords(key_args: tuple[str]) -> dict[str, int]:
     return keywords
 
 
-def __f_read_contents(filename: str) -> list[str]:
+def __f_read_contents(filename: str) -> List[str]:
     contents = []
 
     try:
@@ -56,7 +57,7 @@ def __f_read_contents(filename: str) -> list[str]:
     return contents
 
 
-def f_find_words(filename: str, *key_args: str) -> dict[str, int]:
+def f_find_words(filename: str, *key_args: str) -> Dict[str, int]:
     __is_argument_a_filename(filename)
     __require_valid_keywords(key_args)
 
@@ -71,12 +72,12 @@ def f_find_words(filename: str, *key_args: str) -> dict[str, int]:
     return keywords
 
 
-def __check_console_input(args: list[str]):
+def __check_console_input(args: List[str]):
     require(len(args) >= 1, 'No filename was given')
     require(len(args) >= 2, 'No keywords were given')
 
 
-def print_keyword_ocurrences(keywords: dict[str, int]):
+def print_keyword_ocurrences(keywords: Dict[str, int]):
     kwords = keywords.keys()
 
     for kword in kwords:
