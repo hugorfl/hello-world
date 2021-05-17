@@ -6,3 +6,6 @@ sca_res.txt
 # generated
 GuessingSteps.txt
 __pycache__
+
+# doxygen
+html/
